@@ -1,0 +1,20 @@
+[meta]
+    title = Daily Astronomy Picture of the Day
+
+[scheduler]
+    cycle point time zone = Z
+
+[scheduling]
+    initial cycle point = next(T06)
+    [[graph]]
+        T06 = "@wall_clock => fetch_apod"
+
+[runtime]
+    [[fetch_apod]]
+        platform = localhost
+        execution retry delays = 3*PT30M, PT1H
+        script = """
+            python3 "$APOD_DIR/app/apod/apod.py" --output-dir "$APOD_DIR/output"
+        """
+        [[[environment]]]
+            APOD_DIR = /home/users/liam.hall/apod
